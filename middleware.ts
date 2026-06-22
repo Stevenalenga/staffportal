@@ -5,7 +5,9 @@ import { NextResponse } from "next/server";
 // Use the edge-compatible authConfig — no Prisma, no Node.js-only imports
 const { auth } = NextAuth(authConfig);
 
-const PUBLIC_ROUTES = ["/login", "/api/auth"];
+// /api/mobile routes are protected by their own JWT (verifyMobileToken),
+// not by NextAuth — they must be public here to allow unauthenticated access
+const PUBLIC_ROUTES = ["/login", "/api/auth", "/api/mobile"];
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
