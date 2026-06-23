@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { LoginForm } from "@/components/auth/login-form";
-import { Building2 } from "lucide-react";
 
 export default async function LoginPage() {
   const session = await auth();
@@ -11,11 +10,13 @@ export default async function LoginPage() {
     <div className="w-full max-w-md">
       {/* Logo & Title */}
       <div className="mb-8 flex flex-col items-center text-center">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-700 shadow-lg">
-          <Building2 className="h-8 w-8 text-white" />
-        </div>
-        <h1 className="text-2xl font-bold text-gray-900">Uthabiti Africa</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt="Uthabiti Africa"
+          className="mb-4 h-14 w-auto object-contain"
+        />
+        <p className="text-sm text-gray-500">
           Staff Portal — Sign in to your account
         </p>
       </div>

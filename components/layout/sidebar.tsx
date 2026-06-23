@@ -116,14 +116,18 @@ export function Sidebar({ userRole }: SidebarProps) {
   return (
     <aside className="flex h-full w-64 flex-col border-r border-gray-200 bg-white">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-3 border-b border-gray-200 px-6">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-700">
-          <Building2 className="h-5 w-5 text-white" />
-        </div>
-        <div className="min-w-0">
-          <p className="truncate text-sm font-bold text-gray-900">Uthabiti Africa</p>
-          <p className="truncate text-xs text-gray-500">Staff Portal</p>
-        </div>
+      <div className="flex h-16 items-center border-b border-gray-200 px-5">
+        <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="Uthabiti Africa"
+            className="h-8 w-auto object-contain"
+          />
+          <span className="shrink-0 rounded-md bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700">
+            Portal
+          </span>
+        </Link>
       </div>
 
       {/* Navigation */}

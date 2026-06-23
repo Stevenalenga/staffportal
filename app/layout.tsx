@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   },
   description:
     "Internal operations portal for Uthabiti Africa — manage staff, assets, expenses, and projects.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
