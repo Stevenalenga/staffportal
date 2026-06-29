@@ -9,14 +9,28 @@ export async function GET(req: NextRequest) {
   }
 
   const assets = await db.asset.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { assetTag: "asc" },
     select: {
-      id: true, assetTag: true, name: true, category: true,
-      brand: true, model: true, status: true, purchaseDate: true,
+      id: true,
+      assetTag: true,
+      classification: true,
+      name: true,
+      category: true,
+      brand: true,
+      model: true,
+      serialNumber: true,
+      purchaseDate: true,
+      purchasePrice: true,
+      supplier: true,
+      location: true,
+      staffInCharge: true,
+      status: true,
+      notes: true,
       assignments: {
         where: { returnedAt: null },
-        select: { user: { select: { name: true } } },
+        orderBy: { assignedAt: "desc" },
         take: 1,
+        select: { assignedAt: true, notes: true },
       },
     },
   });
