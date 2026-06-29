@@ -15,6 +15,8 @@ import {
   Building2,
   ChevronDown,
   ChevronRight,
+  ArrowRightLeft,
+  Wrench,
 } from "lucide-react";
 import React from "react";
 
@@ -46,8 +48,8 @@ const navItems: NavItem[] = [
     icon: Package,
     children: [
       { label: "Asset Register", href: "/assets", icon: Package },
-      { label: "Assignments", href: "/assets/assignments", icon: Users },
-      { label: "Maintenance", href: "/assets/maintenance", icon: Settings },
+      { label: "Assignments", href: "/assets/assignments", icon: ArrowRightLeft },
+      { label: "Maintenance", href: "/assets/maintenance", icon: Wrench },
     ],
   },
   {
