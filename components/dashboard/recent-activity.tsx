@@ -10,6 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar } from "@/components/ui/avatar";
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { EXPENSE_STATUS_CONFIG } from "@/lib/expense-workflow";
 
 type Expense = {
   id: string;
@@ -20,18 +21,6 @@ type Expense = {
   expenseDate: Date;
   user: { name: string | null; image: string | null };
   category: { name: string };
-};
-
-const statusConfig: Record<
-  string,
-  { label: string; variant: "default" | "secondary" | "warning" | "info" | "destructive" | "outline" }
-> = {
-  DRAFT: { label: "Draft", variant: "secondary" },
-  SUBMITTED: { label: "Submitted", variant: "info" },
-  UNDER_REVIEW: { label: "Under Review", variant: "warning" },
-  APPROVED: { label: "Approved", variant: "default" },
-  REJECTED: { label: "Rejected", variant: "destructive" },
-  PAID: { label: "Paid", variant: "default" },
 };
 
 export function RecentActivity({ expenses }: { expenses: Expense[] }) {
@@ -67,7 +56,7 @@ export function RecentActivity({ expenses }: { expenses: Expense[] }) {
         ) : (
           <div className="divide-y divide-gray-100">
             {expenses.map((expense) => {
-              const status = statusConfig[expense.status] ?? {
+              const status = EXPENSE_STATUS_CONFIG[expense.status] ?? {
                 label: expense.status,
                 variant: "secondary" as const,
               };
@@ -77,10 +66,7 @@ export function RecentActivity({ expenses }: { expenses: Expense[] }) {
                   : Number(expense.amount);
 
               return (
-                <div
-                  key={expense.id}
-                  className="flex items-center gap-3 py-3"
-                >
+                <div key={expense.id} className="flex items-center gap-3 py-3">
                   <Avatar
                     src={expense.user.image}
                     fallback={expense.user.name ?? "?"}

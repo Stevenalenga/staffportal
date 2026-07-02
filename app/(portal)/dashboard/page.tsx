@@ -5,6 +5,7 @@ import { StatsCards } from "@/components/dashboard/stats-cards";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { PendingApprovals } from "@/components/dashboard/pending-approvals";
+import { PENDING_APPROVAL_STATUSES } from "@/lib/expense-workflow";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -23,7 +24,9 @@ async function getDashboardStats() {
     db.user.count({ where: { employmentStatus: "ACTIVE" } }),
     db.asset.count(),
     db.asset.count({ where: { status: "ASSIGNED" } }),
-    db.expense.count({ where: { status: "SUBMITTED" } }),
+    db.expense.count({
+      where: { status: { in: PENDING_APPROVAL_STATUSES as unknown as ("SUBMITTED" | "FINANCE_APPROVED" | "APPROVED")[] } },
+    }),
     db.project.count({ where: { status: "ACTIVE" } }),
     db.leave.count({ where: { status: "PENDING" } }),
     db.task.count({ where: { status: { in: ["TODO", "IN_PROGRESS"] } } }),
@@ -75,7 +78,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      {/* Page header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">
           Good morning, {firstName}
@@ -85,10 +87,8 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {/* Stats */}
       <StatsCards stats={stats} />
 
-      {/* Main grid */}
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <RecentActivity expenses={recentExpenses} />
