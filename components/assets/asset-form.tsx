@@ -36,7 +36,8 @@ const assetSchema = z.object({
   notes: z.string().optional(),
 });
 
-type AssetFormData = z.infer<typeof assetSchema>;
+type AssetFormInput = z.input<typeof assetSchema>;
+type AssetFormOutput = z.output<typeof assetSchema>;
 
 const CATEGORIES = [
   { value: "LAPTOP", label: "Laptop" },
@@ -59,7 +60,7 @@ const STATUSES = [
 ];
 
 interface AssetFormProps {
-  defaultValues?: Partial<AssetFormData>;
+  defaultValues?: Partial<AssetFormInput>;
   assetId?: string;
 }
 
@@ -71,7 +72,7 @@ export function AssetForm({ defaultValues, assetId }: AssetFormProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<AssetFormData>({
+  } = useForm<AssetFormInput, unknown, AssetFormOutput>({
     resolver: zodResolver(assetSchema),
     defaultValues: {
       status: "AVAILABLE",
@@ -80,7 +81,7 @@ export function AssetForm({ defaultValues, assetId }: AssetFormProps) {
     },
   });
 
-  const onSubmit = async (data: AssetFormData) => {
+  const onSubmit = async (data: AssetFormOutput) => {
     setServerError(null);
     const url = assetId ? `/api/assets/${assetId}` : "/api/assets";
     const method = assetId ? "PUT" : "POST";

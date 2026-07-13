@@ -1,7 +1,5 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import Google from "next-auth/providers/google";
-import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -12,17 +10,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(db),
   providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    }),
-    MicrosoftEntraID({
-      clientId: process.env.AUTH_MICROSOFT_ENTRA_ID_ID,
-      clientSecret: process.env.AUTH_MICROSOFT_ENTRA_ID_SECRET,
-      issuer: process.env.AUTH_MICROSOFT_ENTRA_ID_TENANT_ID
-        ? `https://login.microsoftonline.com/${process.env.AUTH_MICROSOFT_ENTRA_ID_TENANT_ID}/v2.0`
-        : undefined,
-    }),
     Credentials({
       name: "Credentials",
       credentials: {

@@ -23,7 +23,8 @@ const irfSchema = z.object({
   notes: z.string().optional(),
 });
 
-type IrfFormData = z.infer<typeof irfSchema>;
+type IrfFormInput = z.input<typeof irfSchema>;
+type IrfFormOutput = z.output<typeof irfSchema>;
 
 interface Props {
   requestedBy: string;
@@ -48,7 +49,7 @@ export function IrfClaimForm({ requestedBy, projects = [] }: Props) {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IrfFormData>({
+  } = useForm<IrfFormInput, unknown, IrfFormOutput>({
     resolver: zodResolver(irfSchema),
     defaultValues: {
       expenseDate: new Date().toISOString().slice(0, 10),
@@ -76,7 +77,7 @@ export function IrfClaimForm({ requestedBy, projects = [] }: Props) {
     }, 0);
   }, [lineItems]);
 
-  const onSubmit = async (data: IrfFormData, submit: boolean) => {
+  const onSubmit = async (data: IrfFormOutput, submit: boolean) => {
     setLoading(true);
     setError("");
 
